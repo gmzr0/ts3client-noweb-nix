@@ -40,3 +40,8 @@ an outdated chromium version with numerous CVEs.
   };
 }
 ```
+
+## Disclaimer
+
+As my knowledge of C++ and Qt is very limited the stub was created with heavy
+assistance from AI.
