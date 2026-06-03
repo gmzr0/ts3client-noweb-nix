@@ -5,6 +5,7 @@
   fetchurl,
   fetchzip,
   makeDesktopItem,
+  makeWrapper,
   glib,
   qt5,
   libsForQt5,
@@ -13,6 +14,8 @@
   autoPatchelfHook,
   copyDesktopItems,
   qtwebengine-stub,
+  alsa-lib,
+  pulseaudio,
 }: let
   pluginsdk = fetchzip {
     url = "https://files.teamspeak-services.com/releases/sdk/3.3.1/ts_sdk_3.3.1.zip";
@@ -34,6 +37,7 @@ in
       qt5.wrapQtAppsHook
       autoPatchelfHook
       copyDesktopItems
+      makeWrapper
     ];
 
     buildInputs =
@@ -119,6 +123,11 @@ in
       ln -s $out/opt/teamspeak/ts3client $out/bin/ts3client
 
       runHook postInstall
+    '';
+
+    postFixup = ''
+      wrapProgram $out/bin/ts3client \
+        --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [pulseaudio alsa-lib]}"
     '';
 
     meta = {
