@@ -7,7 +7,7 @@
     withSystem prev.stdenv.hostPlatform.system (
       _: {
         teamspeak3 = prev.callPackage ./packages/teamspeak3 {
-          inherit inputs;
+          qtwebengine-stub = prev.callPackage ./packages/qtwebengine-stub {};
         };
       }
     );
